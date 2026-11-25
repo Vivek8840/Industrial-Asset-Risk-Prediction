@@ -1,0 +1,44 @@
+{
+  "project": "P_227 - AI-Based Industrial Asset Risk Prediction Platform",
+  "dataset": "AI4I 2020 Predictive Maintenance Dataset",
+  "target": "Machine failure",
+  "features": [
+    "Type",
+    "Air temperature [K]",
+    "Process temperature [K]",
+    "Rotational speed [rpm]",
+    "Torque [Nm]",
+    "Tool wear [min]"
+  ],
+  "categorical_features": [
+    "Type"
+  ],
+  "numeric_features": [
+    "Air temperature [K]",
+    "Process temperature [K]",
+    "Rotational speed [rpm]",
+    "Torque [Nm]",
+    "Tool wear [min]"
+  ],
+  "algorithm": "XGBoostClassifier",
+  "class_weighting": "none",
+  "decision_threshold": 0.09,
+  "threshold_selection_rule": "Recall >= 0.80 on validation; maximize precision, tie-break on higher threshold",
+  "random_state": 42,
+  "split_sizes": {
+    "train": 6400,
+    "validation": 1600,
+    "test": 2000
+  },
+  "versions": {
+    "pandas": "3.0.6",
+    "scikit_learn": "1.9.1",
+    "xgboost": "3.4.1"
+  },
+  "status": "prototype_candidate",
+  "limitations": [
+    "AI4I is synthetic data and does not establish real-factory performance.",
+    "The probability is not guaranteed to be calibrated as a real-world failure probability.",
+    "Model does not automatically learn from unlabeled incoming telemetry."
+  ]
+}

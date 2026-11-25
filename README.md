@@ -229,40 +229,31 @@ The ELEVATED boundary of 0.045 is a provisional dashboard warning convention, no
 
 ```text
 P_227/
-│
 ├── backend/
 │   ├── app/
 │   │   ├── main.py
-│   │   ├── schemas/
-│   │   │   └── prediction.py
-│   │   └── services/
-│   │       └── model_service.py
-│   ├── tests/
+│   │   ├── schemas/prediction.py
+│   │   └── services/model_service.py
+│   ├── tests/test_api.py
 │   └── requirements.txt
-│
 ├── dashboard/
 │   ├── app.py
 │   └── requirements.txt
-│
-├── config/
 ├── data/
-│   ├── raw/
+│   ├── raw/ai4i2020.csv
 │   ├── processed/
 │   └── splits/
-│
 ├── docs/
+│   ├── dataset_notes.md
 │   └── images/
-│
 ├── models/
 │   ├── p227_xgboost_pipeline.joblib
 │   └── model_metadata.json
-│
 ├── notebooks/
 ├── reports/
-├── scripts/
-├── src/
-├── tests/
-│
+│   ├── final_test_metrics.json
+│   └── Project_Synopsis_Vivek_Mani_Tripathi_2300321540210.pdf
+├── scripts/inspect_dataset.py
 ├── .env.example
 ├── .gitignore
 ├── requirements.txt
@@ -293,7 +284,7 @@ python -m pip install -r backend/requirements.txt
 python -m pip install -r dashboard/requirements.txt
 ```
 
-Use dependency versions compatible with the environment in which the model artifact was created.
+The core ML dependencies are pinned to the versions recorded in `models/model_metadata.json` because the saved joblib pipeline depends on compatible scikit-learn and XGBoost versions. Use Python 3.10+ and install the three requirements files above.
 
 ### Step 3 — Start FastAPI
 
@@ -381,11 +372,20 @@ The numerical score above is illustrative. Actual results depend on the submitte
 
 ## 12. Evaluation and Interpretation
 
-The project uses stratified training, validation and test partitions. The decision threshold is selected on validation data rather than being fixed at the default 0.50.
+The selected threshold is 0.09. The metrics recorded in `reports/final_test_metrics.json` are:
 
-Formal model-performance results should be taken from `reports/final_test_metrics.json` and the evaluation report.
+| Metric | Recorded result |
+|---|---:|
+| Accuracy | 96.20% |
+| Failure precision | 46.77% |
+| Failure recall | 85.29% |
+| Failure F1-score | 60.42% |
+| Average precision (PR-AUC) | 0.8156 |
+| False alarms | 66 |
+| Missed failures | 10 |
+| Detected failures | 58 |
 
-The test partition was also inspected during earlier exploratory threshold experiments. Therefore, test results should be interpreted as prototype evaluation rather than a completely untouched independent estimate of generalization.
+**Evaluation caveat:** The test partition was also inspected during earlier exploratory threshold experiments. These values should therefore be reported as prototype evaluation results, not as a completely untouched independent estimate of generalization. The dataset is synthetic and does not establish real-factory performance.
 
 ## 13. Limitations
 

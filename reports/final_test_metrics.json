@@ -1,0 +1,12 @@
+{
+  "threshold": 0.09,
+  "accuracy": 0.962,
+  "precision_failure": 0.46774193548387094,
+  "recall_failure": 0.8529411764705882,
+  "f1_failure": 0.6041666666666666,
+  "pr_auc_average_precision": 0.8156032216934245,
+  "true_negatives": 1866,
+  "false_alarms": 66,
+  "missed_failures": 10,
+  "detected_failures": 58
+}
